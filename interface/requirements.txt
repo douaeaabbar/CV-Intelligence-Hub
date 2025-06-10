@@ -37,6 +37,3 @@ pickle-mixin>=1.0.2
 
 # Regex et expressions régulières (déjà inclus en Python mais pour compatibilité)
 regex>=2023.6.3
-
-# Pour ignorer les warnings
-warnings
