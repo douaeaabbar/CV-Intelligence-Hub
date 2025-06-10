@@ -12,8 +12,11 @@ st.set_page_config(
 # Charger le CSS
 def load_css(file_name):
     css_path = os.path.join(os.path.dirname(__file__), file_name)
-    with open(css_path, 'r', encoding='utf-8') as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    try:
+        with open(css_path, 'r', encoding='utf-8') as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.warning(f"Fichier CSS {file_name} non trouvé")
 
 load_css("styles.css")
 
