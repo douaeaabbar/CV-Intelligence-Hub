@@ -32,7 +32,17 @@ images = [
     "jisr2.png",
     "jisr3.png"
 ]
+# Vérifier si les images existent, sinon utiliser des placeholders
+verified_images = []
+for img in images:
+    img_path = os.path.join(os.path.dirname(__file__), img)
+    if os.path.exists(img_path):
+        verified_images.append(img)
+    else:
+        # Image de remplacement
+        verified_images.append("https://via.placeholder.com/600x400/00C301/FFFFFF?text=Image+Non+Trouvee")
 
+images = verified_images
 # Logique du carrousel automatique (toutes les 2 secondes)
 current_time = time.time()
 if current_time - st.session_state.last_update >= 2:
