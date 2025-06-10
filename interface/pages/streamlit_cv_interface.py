@@ -317,40 +317,19 @@ def load_cv_system():
         return None
 
 # Chargement du CSS personnalisé
-def load_css(css_file_path="pages\style.css"):
+def load_css(file_name):
     """
-    Chargement des styles CSS depuis un fichier externe
+    Chargement des styles CSS depuis un fichier dans le même dossier
     
     Args:
-        css_file_path (str): Chemin vers le fichier CSS (par défaut: "style.css")
+        file_name (str): Nom du fichier CSS (ex: "style.css")
     """
+    css_path = os.path.join(os.path.dirname(__file__), file_name)
     try:
-        # Vérifier si le fichier existe
-        if os.path.exists(css_file_path):
-            # Lire le contenu du fichier CSS
-            with open(css_file_path, 'r', encoding='utf-8') as f:
-                css_content = f.read()
-            
-            # Appliquer les styles à Streamlit
-            st.markdown(f"<style>{css_content}</style>", unsafe_allow_html=True)
-            
-        else:
-            st.error(f"Le fichier CSS '{css_file_path}' n'a pas été trouvé.")
-            
-    except Exception as e:
-        st.error(f"Erreur lors du chargement du fichier CSS : {str(e)}")
-
-# Utilisation alternative avec un chemin relatif
-def load_css_from_assets(css_filename="style.css"):
-    """
-    Chargement des styles CSS depuis un dossier assets
-    
-    Args:
-        css_filename (str): Nom du fichier CSS dans le dossier assets
-    """
-    css_path = os.path.join("assets", "css", css_filename)
-    load_css(css_path)
-
+        with open(css_path, 'r', encoding='utf-8') as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.warning(f"Fichier CSS {file_name} non trouvé")
 # Fonction pour extraire le texte des fichiers (simplifiée)
 def extract_text_from_file(uploaded_file):
     """Extraction de texte depuis différents formats de fichiers"""
@@ -449,7 +428,7 @@ def create_score_gauge(score, title):
 # Interface principale
 def main():
     """Fonction principale de l'application"""
-    load_css()
+    load_css("style.css")  # Utilisez votre solution qui fonctionne
     initialize_session_state()
     
    
