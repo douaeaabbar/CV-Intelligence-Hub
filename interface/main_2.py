@@ -95,7 +95,14 @@ with col2:
     
     # Affichage de l'image actuelle
     current_image = images[st.session_state.image_index]
-    st.image(current_image, use_container_width=True)
+    image_path = os.path.join(os.path.dirname(__file__), current_image)
+    
+    if os.path.exists(image_path):
+        st.image(image_path, use_container_width=True)
+    else:
+        st.error(f"Image non trouvée : {current_image}")
+    # Image de remplacement ou placeholder
+    st.markdown('<div style="height: 300px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">Image non disponible</div>', unsafe_allow_html=True)
     
     # Indicateurs du carrousel
     indicators_html = '<div class="carousel-indicators">'
