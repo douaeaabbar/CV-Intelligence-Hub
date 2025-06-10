@@ -1,0 +1,450 @@
+/* Masquer la sidebar de Streamlit */
+section[data-testid="stSidebar"] {
+    display: none !important;
+}
+
+/* Variables CSS pour une cohérence des couleurs */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   --secondary-gradient: linear-gradient(to right, #00C301, #007700);
+    --accent-color: #6a85f1;
+    --text-dark: #333;
+    --text-light: #666;
+    --white: #ffffff;
+    --light-bg: #f8f9fa;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --border-radius: 20px;
+    --transition: all 0.3s ease;
+}
+
+/* Couleur de fond générale */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Header personnalisé avec gradient */
+.app-header {
+    background: var(--primary-gradient);
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+/* Logo container avec espacement */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Logo styling */
+.app-logo img {
+    height: 80px;
+    width: auto;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.app-logo img:hover {
+    transform: scale(1.05);
+}
+
+/* Menu de navigation moderne */
+.nav-menu {
+    display: flex !important;
+    gap: 30px !important;
+    align-items: center;
+}
+
+.nav-item {
+    color: var(--white) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    position: relative !important;
+    padding: 10px 15px !important;
+    border-radius: 25px !important;
+    transition: var(--transition) !important;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Section droite du header */
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--white);
+}
+
+.header-icon {
+    color: var(--white) !important;
+    font-size: 18px !important;
+    padding: 10px !important;
+    border-radius: 50% !important;
+    transition: var(--transition) !important;
+    text-decoration: none !important;
+}
+
+.header-icon:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.1) !important;
+}
+
+.flag-icon {
+    font-size: 24px;
+    transition: var(--transition);
+}
+
+.flag-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Section de contenu principal */
+.content-section {
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.landing-title {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.main-title {
+    color: var(--accent-color) !important;
+    font-size: 3.5rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+    line-height: 1.2 !important;
+    background: var(--primary-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    animation: fadeInUp 1s ease-out !important;
+}
+
+.main-description {
+    font-size: 1.1rem !important;
+    line-height: 1.8 !important;
+    color: var(--text-dark) !important;
+    text-align: justify !important;
+    margin-bottom: 2rem !important;
+    animation: fadeInUp 1s ease-out 0.2s both !important;
+}
+
+/* Container du carrousel d'images */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-container img {
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow) !important;
+    transition: var(--transition) !important;
+    max-height: 450px !important;
+    object-fit: contain !important;
+}
+
+.carousel-container img:hover {
+    transform: scale(1.02) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Indicateurs du carrousel */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(106, 133, 241, 0.3);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.indicator.active {
+    background-color: var(--accent-color);
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(106, 133, 241, 0.5);
+}
+
+.indicator:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+/* Bouton principal stylé */
+.stButton > button {
+    
+    background: linear-gradient(to right, #5c7df5, #9462db) !important;
+    border: none !important;
+    padding: 1rem 2rem !important;
+    color: var(--white) !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    border-radius: 50px !important;
+    transition: var(--transition) !important;
+    cursor: pointer !important;
+    min-width: 250px !important;
+    box-shadow: var(--shadow) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+
+.stButton > button:hover {
+    background: var(--secondary-gradient) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(106, 133, 241, 0.4) !important;
+}
+
+.stButton > button:active {
+    transform: translateY(-1px) !important;
+}
+
+/* Section des fonctionnalités */
+.features-section {
+    padding: 4rem 2rem;
+    background: var(--white);
+    margin: 3rem -1.5rem 2rem -1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.section-title {
+    text-align: center;
+    color: var(--text-dark);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    background: var(--secondary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: var(--transition);
+    border: 1px solid rgba(106, 133, 241, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(106, 133, 241, 0.2);
+    border-color: var(--accent-color);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.feature-card h3 {
+    color: var(--text-dark);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Footer amélioré */
+.app-footer {
+    background: var(--primary-gradient);
+    padding: 3rem 2rem 1rem;
+    margin: 3rem -1.5rem 0 -1.5rem;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+    color: var(--white);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo img {
+    height: 60px;
+    width: auto;
+    border-radius: 8px;
+}
+
+.footer-info h4 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.footer-info p {
+    margin: 8px 0 0 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    color: var(--white) !important;
+    font-size: 20px !important;
+    padding: 10px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    transition: var(--transition) !important;
+    text-decoration: none !important;
+}
+
+.social-links a:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-3px) scale(1.1) !important;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .app-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .logo-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .nav-menu {
+        flex-wrap: wrap;
+        gap: 15px !important;
+        justify-content: center;
+    }
+    
+    .main-title {
+        font-size: 2.5rem !important;
+        text-align: center !important;
+    }
+    
+    .main-description {
+        text-align: center !important;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stButton > button {
+        width: 100% !important;
+        min-width: auto !important;
+    }
+}
+
+/* Amélioration des colonnes Streamlit */
+.stColumn {
+    padding: 1rem !important;
+}
+
+/* Masquer les éléments Streamlit non désirés */
+.stDeployButton {
+    display: none !important;
+}
+
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+
+.stMainBlockContainer {
+    padding-top: 2rem !important;
+}
