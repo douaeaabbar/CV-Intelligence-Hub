@@ -100,7 +100,7 @@ with col1:
     """, unsafe_allow_html=True)
 
     # Bouton d'action principal
-    if st.button("🚀 Commencer l'Analyse CV", key="analyze_btn", type="primary"):
+    if st.button("Commencer l'Analyse CV", key="analyze_btn", type="primary"):
         # Vérifier si la page existe avant de rediriger
         target_page = "pages/streamlit_cv_interface.py"
         if os.path.exists(os.path.join(os.path.dirname(__file__), target_page)):
