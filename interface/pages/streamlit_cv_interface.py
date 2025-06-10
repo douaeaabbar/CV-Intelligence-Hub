@@ -200,7 +200,7 @@ class CVClassificationSystem:
         )
         
         # Données d'exemple pour l'entraînement
-        df = pd.read_csv(r"C:\Users\azuz\OneDrive\Bureau\pfe\pfe AI s6\dataset\nv data faker\nouvelles_data_faker.csv")
+        df = pd.read_csv("nv data faker\nouvelles_data_faker.csv")
         sample_texts  =  df['texte_cv'] 
         
         self.tfidf_vectorizer.fit(sample_texts)
@@ -317,7 +317,7 @@ def load_cv_system():
         return None
 
 # Chargement du CSS personnalisé
-def load_css(css_file_path=r"C:\Users\azuz\OneDrive\Bureau\pfe\pfe AI s6\interface\pages\style.css"):
+def load_css(css_file_path="pages\style.css"):
     """
     Chargement des styles CSS depuis un fichier externe
     
@@ -478,7 +478,7 @@ def main():
     # Sidebar pour la navigation
     with st.sidebar:
             # Affichage du logo
-        st.image("C:/Users/azuz/OneDrive/Bureau/pfe/pfe AI s6/interface/pages/Al Jisr - Maroc.png", width=280)
+        st.image("pages/Al Jisr - Maroc.png", width=280)
         st.markdown("# Navigation")
 
         
