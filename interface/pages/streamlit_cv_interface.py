@@ -182,42 +182,81 @@ class CVClassificationSystem:
         return features_df
     
     def create_demo_models(self):
-        """Créer des modèles de démonstration avec des données simulées"""
-        # Simulation de données d'entraînement
-        categories = [ 'Marketing Digital', 'Data Science', 'Maintenance IT', 'Design Graphique','Création de Contenu', 'Frontend Développement','Commerce & Téléconseil', 'Community Management']
+    """Créer des modèles de démonstration avec des données simulées"""
+    # Simulation de données d'entraînement
+    categories = ['Marketing Digital', 'Data Science', 'Maintenance IT', 'Design Graphique',
+                 'Création de Contenu', 'Frontend Développement','Commerce & Téléconseil', 'Community Management']
+    
+    # Initialisation des composants
+    self.label_encoder = LabelEncoder()
+    self.label_encoder.fit(categories)
+    
+    # Vectoriseur TF-IDF simplifié
+    self.tfidf_vectorizer = TfidfVectorizer(
+        max_features=1000,
+        ngram_range=(1, 2),
+        min_df=1,
+        max_df=0.9,
+        stop_words='english'
+    )
+    
+    # SOLUTION ROBUSTE : Essayer de charger le CSV, sinon utiliser des données simulées
+    try:
+        # Essayer différents chemins possibles
+        possible_paths = [
+            "nv data faker/nouvelles_data_faker.csv",
+            "./nv data faker/nouvelles_data_faker.csv",
+            "nouvelles_data_faker.csv"
+        ]
         
-        # Initialisation des composants
-        self.label_encoder = LabelEncoder()
-        self.label_encoder.fit(categories)
+        df = None
+        for path in possible_paths:
+            if os.path.exists(path):
+                df = pd.read_csv(path)
+                st.success(f"✅ Données chargées depuis: {path}")
+                break
         
-        # Vectoriseur TF-IDF simplifié
-        self.tfidf_vectorizer = TfidfVectorizer(
-            max_features=1000,
-            ngram_range=(1, 2),
-            min_df=1,
-            max_df=0.9,
-            stop_words='english'
-        )
-        
-        # Données d'exemple pour l'entraînement
-        df = pd.read_csv("nv data faker\nouvelles_data_faker.csv")
-        sample_texts  =  df['texte_cv'] 
-        
-        self.tfidf_vectorizer.fit(sample_texts)
-        
-        # Modèles pré-entraînés simulés
-        self.classification_model = RandomForestClassifier(n_estimators=50, random_state=42)
-        self.screening_model = xgb.XGBClassifier(n_estimators=50, random_state=42)
-        
-        # Entraînement sur données simulées
-        X_demo = np.random.rand(100, 1006)  # 1000 features TF-IDF + 6 features numériques
-        y_class_demo = np.random.choice(5, 100)
-        y_screen_demo = np.random.choice(2, 100)
-        
-        self.classification_model.fit(X_demo, y_class_demo)
-        self.screening_model.fit(X_demo, y_screen_demo)
-        
-        return True
+        if df is not None and 'texte_cv' in df.columns:
+            sample_texts = df['texte_cv'].fillna("").astype(str)
+        else:
+            raise FileNotFoundError("Fichier CSV non trouvé ou colonne manquante")
+            
+    except Exception as e:
+        # Utiliser des données simulées si le fichier n'existe pas
+        st.warning(f"⚠️ Fichier CSV non trouvé ({str(e)}). Utilisation de données simulées.")
+        sample_texts = [
+            "développeur python machine learning data science",
+            "marketing digital réseaux sociaux stratégie communication",
+            "design graphique adobe photoshop illustrator créatif",
+            "maintenance informatique réseau serveur technique",
+            "frontend react javascript html css développement web",
+            "commerce vente relation client téléconseil",
+            "community manager social media content création",
+            "data analyst sql python visualisation données"
+        ]
+    
+    # Ajuster la liste si elle est trop courte
+    if len(sample_texts) < 10:
+        sample_texts = sample_texts * (10 // len(sample_texts) + 1)
+    
+    sample_texts = sample_texts[:100]  # Limiter à 100 échantillons
+    
+    self.tfidf_vectorizer.fit(sample_texts)
+    
+    # Modèles pré-entraînés simulés
+    self.classification_model = RandomForestClassifier(n_estimators=50, random_state=42)
+    self.screening_model = xgb.XGBClassifier(n_estimators=50, random_state=42)
+    
+    # Entraînement sur données simulées
+    X_demo = np.random.rand(100, 1006)  # 1000 features TF-IDF + 6 features numériques
+    y_class_demo = np.random.choice(len(categories), 100)
+    y_screen_demo = np.random.choice(2, 100)
+    
+    self.classification_model.fit(X_demo, y_class_demo)
+    self.screening_model.fit(X_demo, y_screen_demo)
+    
+    return True
+
     
     def predict_category(self, cv_data):
         """Prédiction de la catégorie d'un CV"""
@@ -317,7 +356,7 @@ def load_cv_system():
         return None
 
 # Chargement du CSS personnalisé
-def load_css(css_file_path="pages\style.css"):
+def load_css(css_file_path="pages/style.css"):
     """
     Chargement des styles CSS depuis un fichier externe
     
