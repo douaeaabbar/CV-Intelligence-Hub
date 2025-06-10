@@ -23,9 +23,9 @@ if 'last_update' not in st.session_state:
 
 # Liste des images pour le carrousel
 images = [
-    "C:/Users/azuz/OneDrive/Bureau/pfe/pfe AI s6/interface/jisr.png",
-    "C:/Users/azuz/OneDrive/Bureau/pfe/pfe AI s6/interface/jisr2.png",
-    "C:/Users/azuz/OneDrive/Bureau/pfe/pfe AI s6/interface/jisr3.png"
+    "jisr.png",
+    "jisr2.png",
+    "jisr3.png"
 ]
 
 # Logique du carrousel automatique (toutes les 2 secondes)
