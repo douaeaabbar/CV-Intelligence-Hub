@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import os
 
 # Configuration de la page
 st.set_page_config(
@@ -10,7 +11,8 @@ st.set_page_config(
 
 # Charger le CSS
 def load_css(file_name):
-    with open(file_name) as f:
+    css_path = os.path.join(os.path.dirname(__file__), file_name)
+    with open(css_path, 'r', encoding='utf-8') as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 load_css("styles.css")
