@@ -26,29 +26,33 @@ if 'image_index' not in st.session_state:
 if 'last_update' not in st.session_state:
     st.session_state.last_update = time.time()
 
-# Liste des images pour le carrousel
+# Liste des images pour le carrousel avec URLs de placeholder
 images = [
-    "jisr.png",
-    "jisr2.png",
-    "jisr3.png"
+    "https://via.placeholder.com/600x400/00C301/FFFFFF?text=CV+Intelligence+Hub+1",
+    "https://via.placeholder.com/600x400/007A01/FFFFFF?text=Al+Jisr+Platform+2", 
+    "https://via.placeholder.com/600x400/005A01/FFFFFF?text=AI+Analysis+3"
 ]
-# Vérifier si les images existent, sinon utiliser des placeholders
+
+# Vérifier si les images locales existent, sinon garder les placeholders
+local_images = ["jisr.png", "jisr2.png", "jisr3.png"]
 verified_images = []
-for img in images:
-    img_path = os.path.join(os.path.dirname(__file__), img)
+
+for i, local_img in enumerate(local_images):
+    img_path = os.path.join(os.path.dirname(__file__), local_img)
     if os.path.exists(img_path):
-        verified_images.append(img)
+        verified_images.append(local_img)
     else:
-        # Image de remplacement
-        verified_images.append("https://via.placeholder.com/600x400/00C301/FFFFFF?text=Image+Non+Trouvee")
+        # Utiliser l'image placeholder correspondante
+        verified_images.append(images[i])
 
 images = verified_images
-# Logique du carrousel automatique (toutes les 2 secondes)
+
+# Logique du carrousel automatique (toutes les 3 secondes)
 current_time = time.time()
-if current_time - st.session_state.last_update >= 2:
+if current_time - st.session_state.last_update >= 3:
     st.session_state.image_index = (st.session_state.image_index + 1) % len(images)
     st.session_state.last_update = current_time
-    st.rerun()
+    # Utiliser st.rerun() seulement si nécessaire et éviter les boucles infinies
 
 # Header avec navigation
 st.markdown("""
@@ -96,8 +100,13 @@ with col1:
     """, unsafe_allow_html=True)
 
     # Bouton d'action principal
-    if st.button(" Commencer l'Analyse CV", key="analyze_btn"):
-        st.switch_page("pages/streamlit_cv_interface.py")
+    if st.button("🚀 Commencer l'Analyse CV", key="analyze_btn", type="primary"):
+        # Vérifier si la page existe avant de rediriger
+        target_page = "pages/streamlit_cv_interface.py"
+        if os.path.exists(os.path.join(os.path.dirname(__file__), target_page)):
+            st.switch_page(target_page)
+        else:
+            st.error("Page d'analyse CV non trouvée. Veuillez vérifier la configuration.")
 
 with col2:
     # Container pour le carrousel d'images
@@ -105,14 +114,31 @@ with col2:
     
     # Affichage de l'image actuelle
     current_image = images[st.session_state.image_index]
-    image_path = os.path.join(os.path.dirname(__file__), current_image)
     
-    if os.path.exists(image_path):
-        st.image(image_path, use_container_width=True)
-    else:
-        st.error(f"Image non trouvée : {current_image}")
-    # Image de remplacement ou placeholder
-    st.markdown('<div style="height: 300px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">Image non disponible</div>', unsafe_allow_html=True)
+    try:
+        # Vérifier si c'est une image locale ou une URL
+        if current_image.startswith('http'):
+            # Image URL - utiliser directement
+            st.image(current_image, use_container_width=True)
+        else:
+            # Image locale - vérifier l'existence
+            image_path = os.path.join(os.path.dirname(__file__), current_image)
+            if os.path.exists(image_path):
+                st.image(image_path, use_container_width=True)
+            else:
+                # Fallback vers placeholder
+                st.image("https://via.placeholder.com/600x400/00C301/FFFFFF?text=Image+Non+Disponible", 
+                        use_container_width=True)
+    except Exception as e:
+        st.error(f"Erreur lors du chargement de l'image: {str(e)}")
+        # Image de secours
+        st.markdown("""
+        <div style="height: 300px; background: linear-gradient(135deg, #00C301, #007A01); 
+                   display: flex; align-items: center; justify-content: center; 
+                   color: white; font-size: 18px; border-radius: 8px;">
+            CV Intelligence Hub - Image non disponible
+        </div>
+        """, unsafe_allow_html=True)
     
     # Indicateurs du carrousel
     indicators_html = '<div class="carousel-indicators">'
@@ -169,6 +195,15 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# Section d'appel à l'action supplémentaire
+st.markdown("""
+<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #00C301, #007A01); 
+           border-radius: 10px; margin: 2rem 0; color: white;">
+    <h3>Prêt à optimiser votre processus de recrutement ?</h3>
+    <p>Rejoignez des centaines d'entreprises qui font confiance à notre IA</p>
+</div>
+""", unsafe_allow_html=True)
+
 # Footer amélioré
 st.markdown("""
     <footer class="app-footer">
@@ -197,8 +232,7 @@ st.markdown("""
     </footer>
 """, unsafe_allow_html=True)
 
-# Auto-refresh pour le carrousel
-placeholder = st.empty()
-with placeholder:
+# Auto-refresh pour le carrousel (contrôlé pour éviter les boucles infinies)
+if current_time - st.session_state.last_update >= 2.9:  # Refresh légèrement avant le changement
     time.sleep(0.1)
     st.rerun()
